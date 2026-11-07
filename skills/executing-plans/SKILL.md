@@ -1,6 +1,6 @@
 ---
 name: executing-plans
-description: Use when executing a written implementation plan task by task — inline yourself, with a fresh subagent per task plus review gates, or with parallel agents for independent problems. Keeps a progress ledger that survives context compaction, enforces TDD and verification per task, and ends with a whole-branch review. Use whenever the user says "execute the plan", "implement it", "نفّذ الخطة", "ابدأ التنفيذ", or hands you a plan file.
+description: Use when executing a written implementation plan task by task — inline yourself, with a fresh subagent per task plus review gates, or with parallel agents for independent problems. Keeps a progress ledger that survives context compaction, enforces TDD and verification per task, and ends with a whole-branch review. Use whenever the user says "execute the plan", "implement it", "start building", or hands you a plan file.
 ---
 
 # Executing Plans

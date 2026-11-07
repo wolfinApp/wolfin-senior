@@ -1,6 +1,6 @@
 ---
 name: systematic-debugging
-description: Use when encountering any bug, error, crash, failing or flaky test, build failure, unexpected behavior, or production incident, before proposing any fix — finds the root cause through evidence (reproduce, trace, compare, hypothesize, test one change at a time) instead of guessing. Use especially under time pressure or after a fix already failed. Triggers on "it's broken", "not working", "error", "خطأ", "ما يشتغل", "طلع إيرور", "صلّح".
+description: Use when encountering any bug, error, crash, failing or flaky test, build failure, unexpected behavior, or production incident, before proposing any fix — finds the root cause through evidence (reproduce, trace, compare, hypothesize, test one change at a time) instead of guessing. Use especially under time pressure or after a fix already failed. Triggers on "it's broken", "not working", "error", "it crashed", "fix it".
 ---
 
 # Systematic Debugging

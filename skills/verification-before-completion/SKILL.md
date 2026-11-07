@@ -1,6 +1,6 @@
 ---
 name: verification-before-completion
-description: Use when about to claim work is complete, fixed, passing, working, or faster — before saying "done", committing, opening a PR, or moving to the next task. Requires running the verification command fresh and reading its output before any success claim; evidence before assertions. Applies to tests, builds, lint, bug fixes, UI changes, performance claims, and agent reports. Triggers on "خلص؟", "اشتغل؟", "تمام؟".
+description: Use when about to claim work is complete, fixed, passing, working, or faster — before saying "done", committing, opening a PR, or moving to the next task. Requires running the verification command fresh and reading its output before any success claim; evidence before assertions. Applies to tests, builds, lint, bug fixes, UI changes, performance claims, and agent reports. Triggers on "is it done?", "does it work?", "all good?".
 ---
 
 # Verification Before Completion

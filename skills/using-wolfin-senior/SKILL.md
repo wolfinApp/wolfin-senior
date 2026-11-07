@@ -1,6 +1,6 @@
 ---
 name: using-wolfin-senior
-description: Entry point and router for the Wolfin Senior engineering toolkit (wolfin-senior plugin). Use at the start of any software task — building a feature, fixing a bug, refactoring, reviewing code, speeding up an app, planning, or shipping — to pick which skill governs the work and in what order, before asking questions or touching code. Also use when the user asks how to approach a programming task, in any language (e.g. Arabic "شلون أبدأ", "سوّي ميزة", "صلّح الخطأ", "حسّن الأداء").
+description: Entry point and router for the Wolfin Senior engineering toolkit (wolfin-senior plugin). Use at the start of any software task — building a feature, fixing a bug, refactoring, reviewing code, speeding up an app, planning, or shipping — to pick which skill governs the work and in what order, before asking questions or touching code. Also use when the user asks how to approach a programming task, in any language.
 ---
 
 # Using Wolfin Senior

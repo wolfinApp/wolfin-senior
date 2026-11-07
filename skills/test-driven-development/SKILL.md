@@ -1,6 +1,6 @@
 ---
 name: test-driven-development
-description: Use when implementing any feature, bugfix, refactor, or behavior change, before writing the implementation code — write the failing test first, watch it fail, write minimal code to pass, then refactor. Also use when writing or changing tests, adding mocks, or when code feels hard to test. Triggers on "add tests", "write the function", "fix the bug", "اكتب تست", "سوّي الدالة".
+description: Use when implementing any feature, bugfix, refactor, or behavior change, before writing the implementation code — write the failing test first, watch it fail, write minimal code to pass, then refactor. Also use when writing or changing tests, adding mocks, or when code feels hard to test. Triggers on "add tests", "write the function", "fix the bug", "write a test".
 ---
 
 # Test-Driven Development

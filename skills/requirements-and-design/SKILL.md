@@ -1,6 +1,6 @@
 ---
 name: requirements-and-design
-description: Use before building anything new or changing behavior — a feature, component, app, API, refactor with visible effects, or any "build/add/make X" request — to understand what the user actually needs, compare approaches, and get an approved design before code is written. Covers SDLC phases 01 Requirements and 02 Design, design docs and ADRs. Use it even when the request seems clear but leaves real decisions open, and for Arabic requests like "أريد أسوي", "ابني لي", "ضيف ميزة", "صمم".
+description: Use before building anything new or changing behavior — a feature, component, app, API, refactor with visible effects, or any "build/add/make X" request — to understand what the user actually needs, compare approaches, and get an approved design before code is written. Covers SDLC phases 01 Requirements and 02 Design, design docs and ADRs. Use it even when the request seems clear but leaves real decisions open, and for requests like "I want to make", "build me", "add a feature", "design".
 ---
 
 # Requirements and Design

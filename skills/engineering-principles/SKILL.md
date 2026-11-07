@@ -1,6 +1,6 @@
 ---
 name: engineering-principles
-description: Use whenever writing, designing, refactoring, or judging code quality — applies the 10 good coding principles (coding standards, documentation, robustness, SOLID, testability, moderate abstraction, design patterns, fewer global dependencies, continuous refactoring, security) plus maintainability and dependency discipline. Use when adding a module, class, API or dependency, when code feels messy or hard to change, when asked "is this good code?", "clean code", "refactor", "SOLID", "design pattern", "secure this", "نظّف الكود", "رتّب الكود", "هل الكود زين؟".
+description: Use whenever writing, designing, refactoring, or judging code quality — applies the 10 good coding principles (coding standards, documentation, robustness, SOLID, testability, moderate abstraction, design patterns, fewer global dependencies, continuous refactoring, security) plus maintainability and dependency discipline. Use when adding a module, class, API or dependency, when code feels messy or hard to change, when asked "is this good code?", "clean code", "refactor", "SOLID", "design pattern", "secure this", "clean this up".
 ---
 
 # Engineering Principles

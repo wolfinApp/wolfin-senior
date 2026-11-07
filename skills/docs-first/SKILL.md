@@ -1,6 +1,6 @@
 ---
 name: docs-first
-description: Use before writing or changing any code that touches a language feature, framework, library, SDK, CLI, config format or external API, before adding or upgrading a dependency, and before scaffolding a new project. Checks the versions the project actually uses against the latest releases, then reads the official, current documentation, changelog and migration notes for exactly the APIs about to be used, instead of trusting memory. Triggers on any coding task, and on "check the docs", "latest version", "راجع الدوكيومنتيشن", "آخر تحديث", "آخر إصدار".
+description: Use before writing or changing any code that touches a language feature, framework, library, SDK, CLI, config format or external API, before adding or upgrading a dependency, and before scaffolding a new project. Checks the versions the project actually uses against the latest releases, then reads the official, current documentation, changelog and migration notes for exactly the APIs about to be used, instead of trusting memory. Triggers on any coding task, and on "check the docs", "latest version", "use the latest release".
 ---
 
 # Docs First

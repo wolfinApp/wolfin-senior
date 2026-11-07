@@ -1,6 +1,6 @@
 ---
 name: finishing-and-shipping
-description: Use when implementation is complete and the work needs to be committed, integrated, released, or handed over — writing meaningful commit messages, choosing merge vs pull request vs keep, writing PR descriptions, checking deployment readiness (migrations, config, rollback, monitoring), and planning maintenance follow-ups. Covers SDLC phases 05 Deployment and 06 Maintenance. Triggers on "commit this", "open a PR", "merge", "deploy", "release", "ارفع", "سوّي commit", "انشر".
+description: Use when implementation is complete and the work needs to be committed, integrated, released, or handed over — writing meaningful commit messages, choosing merge vs pull request vs keep, writing PR descriptions, checking deployment readiness (migrations, config, rollback, monitoring), and planning maintenance follow-ups. Covers SDLC phases 05 Deployment and 06 Maintenance. Triggers on "commit this", "open a PR", "merge", "deploy", "release", "ship it", "publish".
 ---
 
 # Finishing and Shipping

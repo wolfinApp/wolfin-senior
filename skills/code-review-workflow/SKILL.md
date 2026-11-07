@@ -1,6 +1,6 @@
 ---
 name: code-review-workflow
-description: Use when a task or feature is finished and needs review, before merging, when asked to review someone's code or a PR, and when receiving review feedback (from the user, a reviewer, or a bot) before acting on it. Covers self-review, dispatching a fresh reviewer subagent, giving useful reviews, and responding to feedback with technical rigor instead of blind agreement. Triggers on "review this", "راجع الكود", "شوف الـ PR", "عندي ملاحظات".
+description: Use when a task or feature is finished and needs review, before merging, when asked to review someone's code or a PR, and when receiving review feedback (from the user, a reviewer, or a bot) before acting on it. Covers self-review, dispatching a fresh reviewer subagent, giving useful reviews, and responding to feedback with technical rigor instead of blind agreement. Triggers on "review this", "look at this PR", "I got feedback".
 ---
 
 # Code Review Workflow

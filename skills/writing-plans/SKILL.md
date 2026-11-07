@@ -1,6 +1,6 @@
 ---
 name: writing-plans
-description: Use when you have an approved design, spec, or clear requirements for multi-step work, before touching code — turns it into a plan of small, test-first, independently shippable tasks with exact files, interfaces, commands and expected output. Use for any feature, migration, or refactor that spans more than a couple of files, and when the user says "plan it", "خطط", "اكتب خطة", "قسّم الشغل".
+description: Use when you have an approved design, spec, or clear requirements for multi-step work, before touching code — turns it into a plan of small, test-first, independently shippable tasks with exact files, interfaces, commands and expected output. Use for any feature, migration, or refactor that spans more than a couple of files, and when the user says "plan it", "write a plan", "break it down".
 ---
 
 # Writing Plans

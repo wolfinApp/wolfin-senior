@@ -1,6 +1,6 @@
 ---
 name: project-memory
-description: Persistent memory and work journal so nothing is forgotten between sessions or after context compaction. Use at the start of work to recall what was decided and where things stand, after every meaningful step to log what was done and how it was verified, whenever the user states a preference, corrects you, or a decision or hard-won lesson emerges, and before ending a turn that changed files. Also use when the user says "remember", "don't forget", "what did we do", "where did we stop", "continue", "تذكّر", "لا تنسى", "شنو سوينا", "وين وصلنا", "كمّل".
+description: Persistent memory and work journal so nothing is forgotten between sessions or after context compaction. Use at the start of work to recall what was decided and where things stand, after every meaningful step to log what was done and how it was verified, whenever the user states a preference, corrects you, or a decision or hard-won lesson emerges, and before ending a turn that changed files. Also use when the user says "remember", "don't forget", "what did we do", "where did we stop", "continue", "pick up where we left off".
 ---
 
 # Project Memory
