@@ -1,0 +1,75 @@
+#!/usr/bin/env bash
+# SessionStart hook: injects the using-wolfin-senior router plus the project's
+# memory (MEMORY.md index, NOW.md, latest journal tail) and the user memory
+# index, so work resumes where it stopped, including after compaction.
+# Exits quietly on any problem so a broken hook never blocks a session.
+
+case "$0" in
+  */*) here="${0%/*}" ;;
+  *) here="." ;;
+esac
+root="${CLAUDE_PLUGIN_ROOT:-$here/..}"
+skill="$root/skills/using-wolfin-senior/SKILL.md"
+[ -r "$skill" ] || exit 0
+
+router=""
+IFS= read -r -d '' router < "$skill" || true
+
+# Memory lives at the main checkout's root, so all git worktrees share it.
+proj="${CLAUDE_PROJECT_DIR:-$PWD}"
+repo="$proj"
+if common=$(git -C "$proj" rev-parse --path-format=absolute --git-common-dir 2>/dev/null); then
+  case "$common" in
+    */.git) repo="${common%/.git}" ;;
+    *) repo=$(git -C "$proj" rev-parse --show-toplevel 2>/dev/null || printf '%s' "$proj") ;;
+  esac
+fi
+mem="$repo/.wolfin-senior/memory"
+umem="$HOME/.claude/wolfin-senior/memory"
+
+# Keep .wolfin-senior/ out of commits (info/exclude, not the project's .gitignore).
+if [ -d "$repo/.wolfin-senior" ] && [ -n "${common:-}" ] && [ -d "$common" ]; then
+  if ! grep -qxE '/?\.wolfin-senior/?' "$common/info/exclude" 2>/dev/null; then
+    mkdir -p "$common/info" && printf '.wolfin-senior/\n' >> "$common/info/exclude"
+  fi
+fi
+
+# section <title> <file> <max lines> <head|tail>
+section() {
+  [ -r "$2" ] || return 0
+  local n
+  n=$(( $(wc -l < "$2") ))
+  printf '\n### %s (%s)\n' "$1" "$2"
+  if [ "$4" = tail ]; then tail -n "$3" "$2"; else head -n "$3" "$2"; fi
+  if [ "$n" -gt "$3" ]; then printf '\n[truncated: %s of %s lines shown; read the file for the rest]\n' "$3" "$n"; fi
+}
+
+latest=""
+if [ -d "$mem/journal" ]; then
+  latest=$(ls -1 "$mem/journal" 2>/dev/null | grep -E '^[0-9]{4}-[0-9]{2}-[0-9]{2}\.md$' | sort | tail -n 1)
+fi
+
+memory=$(
+  printf '\n\n## Wolfin Senior memory\nProject memory dir: %s\nUser memory dir: %s\nFollow the project-memory skill: resume from NOW.md, log milestones to journal/<today>.md, save durable facts as topic files.\n' "$mem" "$umem"
+  if [ -d "$mem" ]; then
+    section "NOW (resume point)" "$mem/NOW.md" 80 head
+    section "Project memory index" "$mem/MEMORY.md" 150 head
+    [ -n "$latest" ] && section "Latest journal, last entries" "$mem/journal/$latest" 40 tail
+  else
+    printf '\nNo project memory yet. Create it (project-memory skill) when real work starts.\n'
+  fi
+  section "User memory index" "$umem/MEMORY.md" 60 head
+)
+
+# Drop control characters JSON can't carry raw, then JSON-escape.
+s="${router}${memory}"
+s=$(printf '%s' "$s" | LC_ALL=C tr -d '\000-\010\013\014\016-\037')
+s="${s//\\/\\\\}"
+s="${s//\"/\\\"}"
+s="${s//$'\n'/\\n}"
+s="${s//$'\r'/\\r}"
+s="${s//$'\t'/\\t}"
+
+intro="<EXTREMELY_IMPORTANT>\\nThe user installed the Wolfin Senior plugin (wolfin-senior) and wants its skills followed literally. Its router skill (wolfin-senior:using-wolfin-senior) is below and is binding for this whole session, followed by this project's saved memory. Load the other skills with the Skill tool whenever they apply, and follow each one step by step.\\n\\n"
+printf '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":"%s%s\\n</EXTREMELY_IMPORTANT>"}}\n' "$intro" "$s"
+exit 0

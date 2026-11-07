@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# UserPromptSubmit hook: a short reminder on every prompt, so the binding
+# rules stay in view in long sessions, not only at session start.
+# Turn it off with WOLFIN_REMINDER=off.
+
+case "${WOLFIN_REMINDER:-}" in
+  off|OFF|0|false|no) exit 0 ;;
+esac
+
+reminder="Wolfin Senior (strict): before replying, check the using-wolfin-senior map, load every skill that applies with the Skill tool, announce it, and follow it step by step without skipping. Code edits need docs-first and test-driven-development loaded first. Claims of done, fixed or passing need verification-before-completion evidence. Log milestones to the project memory journal. Only the user can waive a step."
+
+printf '{"hookSpecificOutput":{"hookEventName":"UserPromptSubmit","additionalContext":"%s"}}\n' "$reminder"
+exit 0

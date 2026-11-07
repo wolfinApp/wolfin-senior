@@ -1,0 +1,15 @@
+{
+  "name": "wolfin-senior-marketplace",
+  "description": "Local marketplace for the Wolfin Senior plugin",
+  "owner": {
+    "name": "devo"
+  },
+  "plugins": [
+    {
+      "name": "wolfin-senior",
+      "description": "Wolfin Senior: Engineering discipline for Claude Code, followed literally: binding skills for requirements and design, docs-first checks against the latest versions, planning, TDD, systematic debugging, verification, code review, clean-code principles, a 31-point performance audit, shipping, and persistent project memory, enforced by hooks and mapped to the SDLC.",
+      "version": "2.0.0",
+      "source": "./"
+    }
+  ]
+}
