@@ -1,15 +1,59 @@
-# Wolfin Senior: senior engineering discipline for Claude Code
+<a id="readme-top"></a>
 
-AI coding agents write code fast. They also guess, forget what was decided an hour ago, and trust what they remember about libraries that have changed since. Wolfin Senior is a free plugin for Claude Code that gives the agent the habits of a senior engineer, and then makes sure it keeps them.
+<p align="center">
+  <a href="https://wolfin.app/blog?post=wolfin-senior-plugin">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset=".github/assets/banner-dark.png">
+      <img alt="Wolfin Senior: senior engineering discipline for Claude Code, followed literally" src=".github/assets/banner-light.png" width="100%">
+    </picture>
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://code.claude.com/docs/en/plugins"><img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude_Code-plugin-D97757?style=for-the-badge&logo=claude&logoColor=white&labelColor=161616"></a>
+  <a href=".claude-plugin/plugin.json"><img alt="Version" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FwolfinApp%2Fwolfin-senior%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&style=for-the-badge&labelColor=161616&color=efede9"></a>
+  <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-17803f?style=for-the-badge&labelColor=161616"></a>
+  <a href="https://wolfin.app"><img alt="wolfin.app" src="https://img.shields.io/badge/by-wolfin.app-efede9?style=for-the-badge&labelColor=161616"></a>
+  <br>
+  <a href="#what-you-get"><img alt="13 skills" src="https://img.shields.io/badge/skills-13-0a67a3?style=for-the-badge&labelColor=161616"></a>
+  <a href="#the-four-hooks"><img alt="4 hooks" src="https://img.shields.io/badge/hooks-4-6a3fd1?style=for-the-badge&labelColor=161616"></a>
+  <a href="#install"><img alt="Python 3" src="https://img.shields.io/badge/python-3-a35f00?style=for-the-badge&logo=python&logoColor=white&labelColor=161616"></a>
+  <a href="#install"><img alt="Runs on macOS, Linux and WSL" src="https://img.shields.io/badge/runs_on-macOS_%C2%B7_Linux_%C2%B7_WSL-c0283c?style=for-the-badge&labelColor=161616"></a>
+</p>
+
+<p align="center">
+  <a href="#install"><b>Install</b></a>
+  &nbsp;·&nbsp;
+  <a href="#how-it-works"><b>How it works</b></a>
+  &nbsp;·&nbsp;
+  <a href="#the-four-hooks"><b>The four hooks</b></a>
+  &nbsp;·&nbsp;
+  <a href="https://wolfin.app/blog?post=wolfin-senior-plugin"><b>Article</b></a>
+  &nbsp;·&nbsp;
+  <a href="https://wolfin.app"><b>wolfin.app</b></a>
+</p>
+
+<br>
+
+AI coding agents write code fast. They also guess, forget what was decided an hour ago, and trust what they remember about libraries that have changed since. **Wolfin Senior** is a free plugin for Claude Code that gives the agent the habits of a senior engineer, and then makes sure it keeps them.
 
 **Built from real experience.** These skills are the result of a Bachelor's degree in Computer Science, a Master's degree in Artificial Intelligence, more than six years of work with the banking sector and payment companies, and training more than 240 students around the world. They write down what that work teaches: understand the problem before building, read the documentation for the version you actually run, write the test first, prove every claim, and leave a record the next person can trust.
+
+<table align="center">
+  <tr>
+    <td align="center" width="180"><h3>BSc</h3><sub>Computer Science</sub></td>
+    <td align="center" width="180"><h3>MSc</h3><sub>Artificial Intelligence</sub></td>
+    <td align="center" width="180"><h3>6+ years</h3><sub>banking and payments</sub></td>
+    <td align="center" width="180"><h3>240+</h3><sub>students trained worldwide</sub></td>
+  </tr>
+</table>
 
 ```bash
 claude plugin marketplace add wolfinApp/wolfin-senior
 claude plugin install wolfin-senior@wolfin-senior-marketplace
 ```
 
-## What you get
+## <a href="#what-you-get"><img src=".github/assets/icons/skills.svg" width="30" height="30" align="top" alt=""></a>&nbsp;What you get
 
 Thirteen skills, one for each part of the software development life cycle. Claude loads a skill only when the task needs it, so they cost almost nothing until they're used.
 
@@ -24,7 +68,7 @@ Thirteen skills, one for each part of the software development life cycle. Claud
 
 Behind them sit the rules that experience keeps proving: fix root causes, not symptoms; every line of code is a liability; estimates are not promises; ship early and iterate; and ask for help after three failed fixes instead of trying a fourth.
 
-## Followed literally, not suggested
+## <a href="#followed-literally-not-suggested"><img src=".github/assets/icons/shield.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Followed literally, not suggested
 
 A skill is only useful if the agent actually follows it. Wolfin Senior treats its skills as binding: every skill that applies is loaded, announced and followed step by step, and only you can waive a step. Four hooks enforce the parts that matter most, so nothing depends on the agent remembering:
 
@@ -33,19 +77,19 @@ A skill is only useful if the agent actually follows it. Wolfin Senior treats it
 - **Before every code edit:** the edit is refused until the `docs-first` and `test-driven-development` skills are loaded.
 - **End of every turn:** if code changed after the last test run, the agent has to run the tests. If anything changed, it has to log the work.
 
-## Docs first, on the latest release
+## <a href="#docs-first-on-the-latest-release"><img src=".github/assets/icons/docs.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Docs first, on the latest release
 
 Before writing code against a library, the agent checks which version the project actually uses and what the latest release is, then reads the official documentation and changelog for exactly the APIs it is about to touch. A bundled script compares installed and latest versions across npm, PyPI, Go, crates.io, RubyGems, Packagist and pub.dev, flags anything a major version behind or past end of life, and links each library's documentation. In an existing project it codes against the installed version and recommends upgrades as separate work. In a new project it starts on the latest stable release.
 
-## Memory that lasts
+## <a href="#memory-that-lasts"><img src=".github/assets/icons/memory.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Memory that lasts
 
 Context gets compacted and sessions end, but files stay. Each project gets a small memory folder: `NOW.md` says where the work stands, a daily journal records every step and how it was verified, and short topic files keep decisions, preferences and lessons learned. The next session starts from there instead of from zero. Passwords, tokens and keys are never stored, only where they live, and the folder is kept out of git commits.
 
-## A 31-point performance audit
+## <a href="#a-31-point-performance-audit"><img src=".github/assets/icons/audit.svg" width="30" height="30" align="top" alt=""></a>&nbsp;A 31-point performance audit
 
 Ask it why an app is slow, and it inspects the code first, then measures on a fast machine and on a slow device over a weak network. It reports the status, priority and expected impact of 31 techniques, from WebP images and code splitting to N+1 queries, indexes, connection pooling and caching. It applies only the ones that fit, one at a time, with numbers before and after. Anything that adds cost, like Redis or a CDN, waits for your approval.
 
-## Install
+## <a href="#install"><img src=".github/assets/icons/install.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Install
 
 You need Claude Code and Python 3. The hooks run on macOS and Linux. On Windows, use WSL.
 
@@ -62,17 +106,18 @@ Try it for one session, without installing anything:
 claude --plugin-url https://wolfin.app/downloads/wolfin-senior.zip
 ```
 
-Open a new session and ask it, "What's the project memory path?" If it answers with a `.wolfin-senior/memory` path, the plugin is running. Skills appear as `wolfin-senior:<skill>`. Update later with `claude plugin marketplace update wolfin-senior-marketplace`.
+> [!TIP]
+> Open a new session and ask it, "What's the project memory path?" If it answers with a `.wolfin-senior/memory` path, the plugin is running. Skills appear as `wolfin-senior:<skill>`. Update later with `claude plugin marketplace update wolfin-senior-marketplace`.
 
-## Tested in real sessions
+## <a href="#tested-in-real-sessions"><img src=".github/assets/icons/tested.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Tested in real sessions
 
 In a real Claude Code session asked to "add a slugify function with tests", the agent loaded the `test-driven-development` skill on its own. Its first attempt to write a file was refused until it loaded `docs-first` and checked the Node version. It then wrote the test first, watched it fail, wrote the function, ran the tests (8 of 8 passing), and logged the work before finishing.
 
-## Turn a check off
+## <a href="#turn-a-check-off"><img src=".github/assets/icons/toggle.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Turn a check off
 
 Each guarantee can be switched off on its own with an environment variable set to `off`: `WOLFIN_CODE_GATE`, `WOLFIN_VERIFY_GATE`, `WOLFIN_MEMORY_GATE` and `WOLFIN_REMINDER`.
 
-## How it works
+## <a href="#how-it-works"><img src=".github/assets/icons/gear.svg" width="30" height="30" align="top" alt=""></a>&nbsp;How it works
 
 Installing Wolfin Senior adds four kinds of parts to Claude Code: skills that hold the know-how, hooks that enforce it, two scripts that gather facts, and a memory folder that outlives every session. This guide walks through what runs, when it runs, and how each rule gets enforced, so you know exactly what the agent is doing on your behalf.
 
@@ -251,22 +296,37 @@ Strict mode is the default. Each check can be turned off on its own by setting t
 | It keeps working briefly after answering | The end-of-turn check asked for tests or a log entry | Expected, at most once per turn |
 | "lookup failed" in versions.py | No internet, or a private package | Use `--offline`, or `--only` for public packages |
 
-## Files in this repository
+## <a href="#files-in-this-repository"><img src=".github/assets/icons/files.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Files in this repository
+
 ```
-.claude-plugin/          plugin.json + marketplace.json
-hooks/hooks.json         when each hook runs
-hooks/session-start      injects the binding router and memory
-hooks/prompt-reminder    short reminder on every message
-hooks/code-gate.py       code edits need docs-first and TDD loaded
-hooks/stop-gate.py       end of turn: tested after the last edit, work logged
-skills/<name>/SKILL.md   the skill itself
-skills/<name>/references/   references read only when needed
+.claude-plugin/            plugin.json + marketplace.json
+hooks/hooks.json           when each hook runs
+hooks/session-start        injects the binding router and memory
+hooks/prompt-reminder      short reminder on every message
+hooks/code-gate.py         code edits need docs-first and TDD loaded
+hooks/stop-gate.py         end of turn: tested after the last edit, work logged
+skills/<name>/SKILL.md     the skill itself
+skills/<name>/references/  references read only when needed
 skills/docs-first/scripts/versions.py
 skills/performance-optimization/scripts/inventory.py
+.github/assets/            README banner, logo and icons
 ```
 
-## Credits and license
+## <a href="#credits-and-license"><img src=".github/assets/icons/heart.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Credits and license
 
 MIT. Parts of the workflow skills (planning, test-driven development, debugging, review) are adapted from the open-source [superpowers](https://github.com/obra/superpowers) project by Jesse Vincent, under the MIT License. See [LICENSE](LICENSE).
 
-Articles: [wolfin.app](https://wolfin.app/blog?post=wolfin-senior-plugin)
+Articles: [Wolfin Senior plugin](https://wolfin.app/blog?post=wolfin-senior-plugin) and [How Wolfin Senior works](https://wolfin.app/blog?post=how-wolfin-senior-works) on wolfin.app.
+
+<br>
+
+<p align="center">
+  <a href="https://wolfin.app">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset=".github/assets/logo-dark.png">
+      <img alt="Wolfin" src=".github/assets/logo-light.png" width="76">
+    </picture>
+  </a>
+  <br>
+  <sub>Made by <a href="https://wolfin.app"><b>Wolfin</b></a> &nbsp;·&nbsp; <a href="#readme-top">Back to top</a></sub>
+</p>
