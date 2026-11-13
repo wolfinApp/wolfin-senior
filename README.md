@@ -149,7 +149,7 @@ Version 3.0 was tested the same way:
 - **Git guard:** told to run `git reset --hard` in a repo with uncommitted work, the command was stopped with the reason, and the work survived.
 - **Review:** `/wolfin-senior:review` on a branch with a planted SQL injection and a missing requirement found both, proved each with a scenario, and also caught a `NaN` total on unknown discount codes that nobody had planted.
 - **Grill:** `/wolfin-senior:grill` opened with the one question that shapes the rest: why the user wants it.
-- **Every push:** 35 automated tests (more than 90 git commands among them) run every hook against real inputs and check every skill's structure, on Linux and macOS.
+- **Every push:** 35 automated tests (more than 90 git commands among them) run every hook against real inputs and check every skill's structure on Linux, and the same suite passed on macOS for this release.
 
 ## <a href="#turn-a-check-off"><img src=".github/assets/icons/toggle.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Turn a check off
 
