@@ -17,7 +17,7 @@ you'd have discovered.
 
 Always: new features, bug fixes, refactors, behavior changes.
 
-Exceptions, only with the user's agreement: throwaway spikes, generated
+Exceptions, only with the user's agreement: throwaway prototypes, generated
 code, pure configuration. If you catch yourself thinking "skip TDD just this
 once", that's the rationalization this skill exists to stop.
 
@@ -30,6 +30,25 @@ NO PRODUCTION CODE WITHOUT A FAILING TEST FIRST
 Wrote code before the test? Set it aside and implement fresh from the test.
 Don't keep it "as a reference" and adapt it. That's testing after, with
 extra steps.
+
+## Pick the seams first
+
+A **seam** is the public interface a test goes through: where you observe
+behavior without reaching inside. Tests live at seams, never against
+internals (private methods, internal collaborators, a database row read
+behind the interface's back).
+
+Before the first test, write down the seams you'll test, with one line each
+on what that seam catches and what it misses. Prefer an existing seam, and
+the highest one that still reaches the behavior: fewer seams, fewer tests
+that break on refactors. When a feature has more than one candidate seam,
+confirm the list with the user before writing tests. When the right seam
+doesn't exist yet, that's a design question (`../engineering-principles/references/deep-modules.md`).
+
+**One slice at a time.** One test, then the minimal code for it, then the
+next test, each one shaped by what the last cycle taught you. Writing all
+the tests first and all the code after tests behavior you imagined and
+locks in a structure before you've learned anything.
 
 ## Red → Green → Refactor
 

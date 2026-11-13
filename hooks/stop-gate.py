@@ -18,6 +18,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 import time
 from datetime import datetime
 
@@ -87,6 +88,33 @@ def ensure_excluded(exclude):
         pass
 
 
+def inside(path, root):
+    """True if path is in the project folder (relative paths count as inside).
+
+    Compares both the literal and the symlink-resolved paths, so a file under a
+    linked folder in the project counts, and ignores letter case on macOS and
+    Windows, whose file systems usually do.
+    """
+    if not root or not os.path.isabs(path):
+        return True
+    fold = str.lower if sys.platform in ("darwin", "win32") else str
+
+    def under(p, r):
+        p, r = fold(p), fold(r).rstrip(os.sep)
+        return p == r or p.startswith(r + os.sep) or not r
+
+    return (under(os.path.abspath(path), os.path.abspath(root))
+            or under(os.path.realpath(path), os.path.realpath(root)))
+
+
+def scratch(path, root):
+    """A throwaway file: outside the project and inside a temp folder."""
+    if inside(path, root):
+        return False
+    temps = {tempfile.gettempdir(), os.environ.get("TMPDIR", ""), "/tmp", "/var/tmp"}
+    return any(t and inside(path, t) and os.path.isabs(path) for t in temps)
+
+
 def is_prompt(entry):
     """A real user prompt: not a tool result, not meta, not a subagent line."""
     if entry.get("type") != "user" or entry.get("isMeta") or entry.get("isSidechain"):
@@ -99,8 +127,8 @@ def is_prompt(entry):
     return False
 
 
-def scan(transcript):
-    """Facts about the turn after the last prompt."""
+def scan(transcript, root=None):
+    """Facts about the turn after the last prompt. Throwaway files outside root don't count."""
     turn = None
     with open(transcript, encoding="utf-8", errors="ignore") as fh:
         for line in fh:
@@ -118,8 +146,10 @@ def scan(transcript):
                     continue
                 name, tool_input = block.get("name", ""), block.get("input") or {}
                 if name in EDIT_TOOLS:
-                    turn["worked"] = True
                     path = str(tool_input.get("file_path") or tool_input.get("notebook_path") or "")
+                    if scratch(path, root):
+                        continue
+                    turn["worked"] = True
                     if os.path.splitext(path)[1].lower() in CODE_EXT and "/.wolfin-senior/" not in path:
                         turn["unverified_code"] = True
                 elif name == "Bash":
@@ -153,7 +183,8 @@ def main():
     transcript = data.get("transcript_path")
     if not transcript or not os.path.isfile(transcript):
         return
-    turn = scan(transcript)
+    project = os.environ.get("CLAUDE_PROJECT_DIR") or data.get("cwd") or os.getcwd()
+    turn = scan(transcript, project)
     if not turn or not turn["start"] or not turn["worked"]:
         return
 
@@ -165,7 +196,7 @@ def main():
             "the output. If it truly can't run, say exactly why in your final message."
         )
     if not off("WOLFIN_MEMORY_GATE"):
-        mem, exclude = repo_paths(os.environ.get("CLAUDE_PROJECT_DIR") or data.get("cwd") or os.getcwd())
+        mem, exclude = repo_paths(project)
         ensure_excluded(exclude)
         journal = os.path.join(mem, "journal", time.strftime("%Y-%m-%d") + ".md")
         now = os.path.join(mem, "NOW.md")

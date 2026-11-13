@@ -112,6 +112,15 @@ Speed up the products and orders pages (perf audit: `docs/performance/2026-11-04
 When a task is finished, clear it from NOW.md and leave the outcome in the
 journal.
 
+## Handing off to a fresh session
+
+When the context is nearly full, or the work continues in another session
+or with another person, bring the journal and `NOW.md` up to date, then
+write a short handoff note (`.wolfin-senior/memory/handoff.md`): goal, state,
+decisions not to reopen, next steps, pointers to the plan, specs and PR
+(referenced, never copied), and which skills to load first. The user can
+run this as `/wolfin-senior:handoff`.
+
 ## Knowledge: what to save
 
 One fact or topic per file, named in kebab-case, with frontmatter:

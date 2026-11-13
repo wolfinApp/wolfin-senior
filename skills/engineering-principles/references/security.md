@@ -4,6 +4,23 @@ Treat every input (request bodies, query strings, headers, cookies, files,
 webhooks, environment, even your own DB if users wrote to it) as hostile
 until validated.
 
+## OWASP Top 10:2025 at a glance
+
+The current list (owasp.org/Top10/2025), and where this checklist covers each:
+
+| # | Category | Where |
+|---|---|---|
+| A01 | Broken Access Control | §4: authorization on every request, IDOR, CORS |
+| A02 | Security Misconfiguration | §3 and §5: debug off, headers, CORS, defaults |
+| A03 | Software Supply Chain Failures | §6 |
+| A04 | Cryptographic Failures | §4 (password hashing, tokens) and §6 (TLS, keys) |
+| A05 | Injection | §1 and §2 |
+| A06 | Insecure Design | Threat-model in the design doc's security section (`requirements-and-design`) |
+| A07 | Authentication Failures | §4: hashing, rate limits, sessions, JWT |
+| A08 | Software or Data Integrity Failures | §5 (deserialization) and §6 (signed artifacts, CI) |
+| A09 | Security Logging and Alerting Failures | §7 |
+| A10 | Mishandling of Exceptional Conditions | §7 |
+
 ## 1. Injection (SQL, NoSQL, command, template, LDAP)
 
 - **Always use parameterized queries** or the ORM's binding. Never build
@@ -69,6 +86,36 @@ until validated.
 - **Dependencies:** run `npm audit`, `pip-audit`, `cargo audit`, or Dependabot. Pin versions and keep a lockfile.
 - **Security headers:** `Strict-Transport-Security`, `X-Content-Type-Options: nosniff`, `Referrer-Policy`, `frame-ancestors` in CSP.
 
+## 6. Supply chain and integrity
+
+- **Every dependency is code you run.** Before adding one, check it's the
+  real package (typosquats like `reqeusts`), maintained, and worth it
+  (`engineering-principles`, "Adding a dependency").
+- **Lockfiles are committed** and CI installs from them exactly
+  (`npm ci`, `pip install --require-hashes`, `cargo build --locked`).
+- **Audit in CI:** `npm audit`, `pip-audit`, `cargo audit`, `govulncheck`,
+  or Dependabot/Renovate, with someone owning the alerts.
+- **Install scripts** (`postinstall`) of new packages get read before they run.
+- **CI and build:** pin third-party actions to a commit SHA, give tokens the
+  least permission, keep secrets out of logs and out of pull requests from
+  forks, and sign or checksum the artifacts you ship.
+- **TLS everywhere, and keys in a secret manager**, rotated, never in the repo.
+
+## 7. Failing safely, and knowing about it
+
+- **Fail closed.** When an authorization check, a validation or a
+  dependency errors, deny the action. Never let an exception skip a check.
+- **Handle every error path on purpose:** catch narrow exceptions, never
+  swallow them, roll back partial work, and release resources in `finally`
+  or `defer`.
+- **Generic messages out, detail in the logs.** Users see "Something went
+  wrong (ref 8f3a)"; the log has the stack trace and the reference.
+- **Log security events** (logins, failed logins, permission denials,
+  admin actions, input validation failures) with who, what and when, never
+  the secrets themselves.
+- **Alert on them.** A log nobody watches catches nothing: a spike in
+  failed logins or 403s should page someone.
+
 ## Review questions
 
 1. Where does untrusted input enter, and where is it validated?
@@ -76,3 +123,5 @@ until validated.
 3. Does every endpoint check *who* is asking and *whether they own* the resource?
 4. What would an attacker learn from error messages, logs or API responses?
 5. What happens if someone calls this 10,000 times a minute?
+6. If this code throws halfway, is the system left safe and is someone told?
+7. What new code from outside (packages, actions, scripts) does this change make us run?

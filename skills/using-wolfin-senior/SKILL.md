@@ -48,8 +48,10 @@ what you couldn't."
 edits are refused until `docs-first` and `test-driven-development` have been
 loaded in the session. A turn that changed code can't end until a
 verification command has run after the last code edit and the work is
-logged in the project memory. When a hook stops you, do what its message
-says, then continue.
+logged in the project memory. Git commands that destroy work (force push,
+`reset --hard`, `clean -f`, `branch -D`, discarding changes) need the user's
+approval in a prompt. When a hook stops you, do what its message says, then
+continue.
 
 ## The map: SDLC phase → skill
 
@@ -60,12 +62,14 @@ says, then continue.
 | 03 Development | Approved design, multi-step work ahead | `writing-plans` → `executing-plans` |
 | 03 Development | **Before writing any code** that uses a framework, library, SDK, CLI or config format, or adding or upgrading a dependency | `docs-first` |
 | 03 Development | Writing any production code, feature or bugfix | `test-driven-development` + `engineering-principles` |
+| 03 Development | Building, changing or reviewing any user interface: pages, components, forms, layout, styling | `ui-engineering` (with `test-driven-development` for its logic) |
 | 04 Testing | Bug, failing or flaky test, unexpected behavior, build failure | `systematic-debugging` |
 | 04 Testing | About to say "done", "fixed", "passing", "faster" | `verification-before-completion` |
 | 04 Testing | Finished a task, want a review, or got review feedback | `code-review-workflow` |
 | 05 Deployment | Work complete: commit, merge, PR, release | `finishing-and-shipping` |
 | 06 Maintenance | Slow app, performance audit, scaling, "optimize" | `performance-optimization` |
-| 06 Maintenance | Refactoring, cleanup, tech debt | `engineering-principles` + `test-driven-development` |
+| 06 Maintenance | Codebase hard to change or test, "where should we refactor", tech debt survey | `architecture-review` |
+| 06 Maintenance | Refactoring, cleanup | `engineering-principles` + `test-driven-development` |
 | Every phase | Resuming work, "what did we do", a preference or decision worth keeping, logging steps | `project-memory` |
 
 Process skills go first because they set the approach. Implementation
@@ -74,7 +78,20 @@ skills carry it out:
 - "Build X": `requirements-and-design` first, `docs-first` before the first line of code, then the rest of the chain.
 - "Fix this bug": `systematic-debugging` first, then TDD for the fix.
 - "Make it faster": `performance-optimization`. It audits and measures before it changes anything.
+- "Build this page": `requirements-and-design` if anything is unclear, then `docs-first`, `ui-engineering` and TDD for the logic.
 - A tiny, fully specified change ("rename this variable", "make the button blue"): just do it well, then `verification-before-completion`.
+
+## Commands the user can type
+
+These run only when the user types them. You can suggest one when it fits.
+
+| Command | What it does |
+|---|---|
+| `/wolfin-senior:grill` | Rounds of questions with recommended answers, until the plan has no open decisions |
+| `/wolfin-senior:review` | Two-axis review (spec and standards) of a PR, branch or the current changes |
+| `/wolfin-senior:audit` | The 31-point performance audit report, measured, with nothing changed yet |
+| `/wolfin-senior:handoff` | Brings the memory up to date and writes a handoff note for a fresh session |
+| `/wolfin-senior:retro` | Suggests environment fixes (checks, standards, pointers) after a session |
 
 ## Memory: never forget, always log
 
@@ -120,6 +137,7 @@ These are the mindset behind every skill. Each one maps to something you do.
 |---|---|
 | "It's a simple change" | Simple changes break things too. The skills scale down. |
 | "Let me look at the code first" | The skill tells you how to look. Load it first. |
+| "It's only CSS, no need to open the page" | Use `ui-engineering`. Layout bugs only show in a browser. |
 | "I remember what that skill says" | Skills change. Read the current version. |
 | "I'll quickly try a fix" | That's guessing. Use `systematic-debugging`. |
 | "This optimization is obviously good" | Measure first. Use `performance-optimization`. |

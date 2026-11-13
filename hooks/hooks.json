@@ -32,6 +32,17 @@
             "timeout": 10
           }
         ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "if": "Bash(git *)",
+            "command": "python3 -I \"${CLAUDE_PLUGIN_ROOT}/hooks/git-guard.py\"",
+            "timeout": 10
+          }
+        ]
       }
     ],
     "Stop": [

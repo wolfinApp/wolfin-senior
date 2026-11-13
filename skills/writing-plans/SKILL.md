@@ -53,6 +53,30 @@ reviewer's gate. Fold setup, configuration and docs into the task that
 needs them. Split only where a reviewer could reasonably reject one task
 while approving its neighbor.
 
+**Slice vertically.** Each task is a **tracer bullet**: a narrow but
+complete path through every layer it needs (schema, logic, API, UI, tests),
+demoable or verifiable on its own and small enough for one fresh context
+window. A plan of horizontal layers ("all the models, then all the
+endpoints, then the UI") delivers nothing working until the last task and
+hides integration bugs until then.
+
+**Prefactor first.** If the existing code makes the change awkward, the
+first task reshapes it without changing behavior: make the change easy,
+then make the easy change.
+
+**Declare blocking edges.** Every task names the tasks that must finish
+before it can start, or "None". The **frontier** is every task whose
+blockers are done; independent tasks on the frontier can run in parallel
+(`executing-plans`).
+
+**Wide refactors are the exception.** One mechanical change whose blast
+radius spans the codebase (rename a column, retype a shared symbol) can't
+land as a green vertical slice. Sequence it as **expand, migrate,
+contract**: add the new form beside the old so nothing breaks; move callers
+over in batches sized by blast radius (per package or directory), each its
+own task blocked by the expand; delete the old form in a final task blocked
+by every batch.
+
 Each **step** is one action with a checkable result:
 "write the failing test", "run it and watch it fail", "implement the
 minimal code", "run the tests and watch them pass", "commit".
@@ -87,7 +111,9 @@ Estimates are ranges with assumptions, not promises (rule 13).
 ## Task template
 
 ````markdown
-### Task N: <Component>
+### Task N: <What works after this task, in user terms>
+
+**Blocked by:** Task 2, Task 3 (or "None: can start immediately")
 
 **Files:**
 - Create: `exact/path/new_file.py`
@@ -144,9 +170,10 @@ Run this checklist yourself after writing the plan:
 1. **Spec coverage:** for each requirement in the spec, point to the task that implements it. Add tasks for gaps.
 2. **Step scan:** every step lets the implementer write exactly one reasonable thing. Fix vague lines and over-specified bodies.
 3. **Type consistency:** names and signatures match across tasks (`clearLayers()` in Task 3 vs `clearAllLayers()` in Task 7 is a bug).
-4. **Review focus:** every listed failure mode has a test in its owning task.
-5. **Proportion:** if code blocks are most of the document, replace bodies with signatures and assertions.
-6. **Working software:** after each task, does the app still build and run?
+4. **Slices and edges:** every task is a vertical slice that works on its own, every "Blocked by" names a real dependency, and no task waits on one it doesn't need.
+5. **Review focus:** every listed failure mode has a test in its owning task.
+6. **Proportion:** if code blocks are most of the document, replace bodies with signatures and assertions.
+7. **Working software:** after each task, does the app still build and run?
 
 Fix issues inline. No second review needed.
 

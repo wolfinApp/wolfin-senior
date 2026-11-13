@@ -24,8 +24,14 @@ How we'll know it worked: observable outcomes, ideally measurable
 
 ## 3. Scope
 - **Goals:** ...
-- **Non-goals:** things we're deliberately not doing now
+- **Non-goals (out of scope):** things we're deliberately not doing now
 - **Anti-goals:** what would make this a failure even if it technically works
+
+## 3a. User stories
+A long, numbered list covering every actor and every path, including the
+unhappy ones. Each in the form:
+1. As a <actor>, I want <capability>, so that <benefit>.
+2. As a mobile bank customer, I want to see my balance on every account, so that I can decide what to spend.
 
 ## 4. Current state
 How the relevant parts work today (files, modules, data flow). What this
@@ -55,6 +61,18 @@ Stack, platforms, deadlines, team, compatibility, budget, regulations.
 - **Testability:** how it will be tested (unit / integration / e2e), what is hard to test and how we handle it
 - **Accessibility / i18n:** RTL, languages, screen readers, if relevant
 
+## 8a. Testing decisions
+- **Seams under test:** the public interfaces the tests go through, each with a
+  line on what it catches and what it misses. Prefer existing seams, and the
+  highest one that reaches the behavior. Fewer seams is better.
+- **What a good test is here:** behavior through the interface, never internals.
+- **Prior art:** similar tests already in the codebase to copy the style of.
+
+## 8b. Prototype verdicts
+Each question a prototype answered, and the answer. "Does the refund state
+machine survive a partial refund after a chargeback? Yes, with a fourth
+state, `disputed`." Omit the section if there were none.
+
 ## 9. Decisions
 | Decision | Made by | Reason |
 |---|---|---|
@@ -75,9 +93,22 @@ Choices a competent engineer can make without changing what gets built.
 
 ## ADR (Architecture Decision Record)
 
-One file per decision, numbered, never edited after acceptance. A new
-decision supersedes an old one. Location: the project's convention, or
-`docs/adr/NNNN-<short-title>.md`.
+Write one only when the decision passes the three-part test in
+`domain-language.md`: hard to reverse, surprising without context, and the
+result of a real trade-off. One file per decision, numbered, never edited
+after acceptance. A new decision supersedes an old one. Location: the
+project's convention, or `docs/adr/NNNN-<short-title>.md`.
+
+The short form is usually enough:
+
+```markdown
+# NNNN. <Decision in present tense>
+
+<One to three sentences: the context, what we decided, and why.>
+```
+
+Use the full form when the rejected options or the consequences are worth
+remembering:
 
 ```markdown
 # NNNN. <Decision title in present tense, e.g. "Use Redis for session storage">

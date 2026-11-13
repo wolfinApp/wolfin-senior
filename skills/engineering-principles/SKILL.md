@@ -72,6 +72,13 @@ the details. Rule of three: duplicate once, abstract on the third
 occurrence, when you can see the real shape. Don't build frameworks for one
 use case.
 
+Aim for **deep modules**: a lot of behavior behind a small interface.
+Apply the deletion test (if deleting a module makes its complexity vanish,
+it was a pass-through), and add a seam only when two adapters need it
+(usually production and test). The vocabulary, the dependency categories
+and the "design it twice" method for important interfaces:
+`references/deep-modules.md`.
+
 ### 7. Design patterns
 Use a pattern when it solves a problem you actually have, never as
 decoration.
@@ -135,7 +142,7 @@ Before adding a package, check in order:
 - [ ] Network calls have timeouts, and resources are cleaned up
 - [ ] No secrets, no injection paths, authorization checked
 - [ ] No new global mutable state, and dependencies are injected
-- [ ] No speculative abstraction or options nobody asked for
+- [ ] No speculative abstraction or options nobody asked for, and no pass-through modules that fail the deletion test
 - [ ] Tests cover the behavior, and are fast and deterministic
 - [ ] Comments explain why, and docs are updated with the code
 - [ ] No new dependency without justification

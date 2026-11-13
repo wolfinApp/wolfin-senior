@@ -12,11 +12,13 @@
 <p align="center">
   <a href="https://code.claude.com/docs/en/plugins"><img alt="Claude Code plugin" src="https://img.shields.io/badge/Claude_Code-plugin-D97757?style=for-the-badge&logo=claude&logoColor=white&labelColor=161616"></a>
   <a href=".claude-plugin/plugin.json"><img alt="Version" src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fraw.githubusercontent.com%2FwolfinApp%2Fwolfin-senior%2Fmain%2F.claude-plugin%2Fplugin.json&query=%24.version&label=version&style=for-the-badge&labelColor=161616&color=efede9"></a>
+  <a href="https://github.com/wolfinApp/wolfin-senior/actions/workflows/ci.yml"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/wolfinApp/wolfin-senior/ci.yml?branch=main&label=tests&style=for-the-badge&labelColor=161616"></a>
   <a href="LICENSE"><img alt="MIT license" src="https://img.shields.io/badge/license-MIT-17803f?style=for-the-badge&labelColor=161616"></a>
   <a href="https://wolfin.app"><img alt="wolfin.app" src="https://img.shields.io/badge/by-wolfin.app-efede9?style=for-the-badge&labelColor=161616"></a>
   <br>
-  <a href="#what-you-get"><img alt="13 skills" src="https://img.shields.io/badge/skills-13-0a67a3?style=for-the-badge&labelColor=161616"></a>
-  <a href="#the-four-hooks"><img alt="4 hooks" src="https://img.shields.io/badge/hooks-4-6a3fd1?style=for-the-badge&labelColor=161616"></a>
+  <a href="#what-you-get"><img alt="15 skills" src="https://img.shields.io/badge/skills-15-0a67a3?style=for-the-badge&labelColor=161616"></a>
+  <a href="#commands"><img alt="5 commands" src="https://img.shields.io/badge/commands-5-17803f?style=for-the-badge&labelColor=161616"></a>
+  <a href="#the-five-hooks"><img alt="5 hooks" src="https://img.shields.io/badge/hooks-5-6a3fd1?style=for-the-badge&labelColor=161616"></a>
   <a href="#install"><img alt="Python 3" src="https://img.shields.io/badge/python-3-a35f00?style=for-the-badge&logo=python&logoColor=white&labelColor=161616"></a>
   <a href="#install"><img alt="Runs on macOS, Linux and WSL" src="https://img.shields.io/badge/runs_on-macOS_%C2%B7_Linux_%C2%B7_WSL-c0283c?style=for-the-badge&labelColor=161616"></a>
 </p>
@@ -26,7 +28,9 @@
   &nbsp;·&nbsp;
   <a href="#how-it-works"><b>How it works</b></a>
   &nbsp;·&nbsp;
-  <a href="#the-four-hooks"><b>The four hooks</b></a>
+  <a href="#commands"><b>Commands</b></a>
+  &nbsp;·&nbsp;
+  <a href="#the-five-hooks"><b>The five hooks</b></a>
   &nbsp;·&nbsp;
   <a href="https://wolfin.app/blog?post=wolfin-senior-plugin"><b>Article</b></a>
   &nbsp;·&nbsp;
@@ -55,27 +59,38 @@ claude plugin install wolfin-senior@wolfin-senior-marketplace
 
 ## <a href="#what-you-get"><img src=".github/assets/icons/skills.svg" width="30" height="30" align="top" alt=""></a>&nbsp;What you get
 
-Thirteen skills, one for each part of the software development life cycle. Claude loads a skill only when the task needs it, so they cost almost nothing until they're used.
+Fifteen skills, one for each part of the software development life cycle, and five commands you can type. Claude loads a skill only when the task needs it, so they cost almost nothing until they're used.
 
 | Phase | Skills |
 |---|---|
 | Requirements and design | `requirements-and-design`, `engineering-principles` |
-| Development | `docs-first`, `writing-plans`, `executing-plans`, `test-driven-development` |
+| Development | `docs-first`, `writing-plans`, `executing-plans`, `test-driven-development`, `ui-engineering` |
 | Testing | `systematic-debugging`, `verification-before-completion`, `code-review-workflow` |
 | Deployment | `finishing-and-shipping` |
-| Maintenance | `performance-optimization`, `engineering-principles` |
+| Maintenance | `performance-optimization`, `architecture-review`, `engineering-principles` |
 | Every phase | `using-wolfin-senior` (the router), `project-memory` |
+
+### Commands
+
+| Type | What it does |
+|---|---|
+| `/wolfin-senior:grill` | Rounds of sharp questions, each with a recommended answer, until the plan has no open decisions |
+| `/wolfin-senior:review` | Two-axis review of a PR, branch or your current changes, every finding proven |
+| `/wolfin-senior:audit` | The 31-point performance audit, measured, with nothing changed until you choose |
+| `/wolfin-senior:handoff` | Brings the memory up to date and writes a note a fresh session can continue from |
+| `/wolfin-senior:retro` | Looks back at the session and suggests checks, standards and pointers so mistakes don't repeat |
 
 Behind them sit the rules that experience keeps proving: fix root causes, not symptoms; every line of code is a liability; estimates are not promises; ship early and iterate; and ask for help after three failed fixes instead of trying a fourth.
 
 ## <a href="#followed-literally-not-suggested"><img src=".github/assets/icons/shield.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Followed literally, not suggested
 
-A skill is only useful if the agent actually follows it. Wolfin Senior treats its skills as binding: every skill that applies is loaded, announced and followed step by step, and only you can waive a step. Four hooks enforce the parts that matter most, so nothing depends on the agent remembering:
+A skill is only useful if the agent actually follows it. Wolfin Senior treats its skills as binding: every skill that applies is loaded, announced and followed step by step, and only you can waive a step. Five hooks enforce the parts that matter most, so nothing depends on the agent remembering:
 
 - **Session start:** loads the rules and the project's memory, again after every context compaction.
 - **Every message:** a short reminder of the rules, so they stay in view in long sessions.
 - **Before every code edit:** the edit is refused until the `docs-first` and `test-driven-development` skills are loaded.
 - **End of every turn:** if code changed after the last test run, the agent has to run the tests. If anything changed, it has to log the work.
+- **Before a destructive git command:** force push, `reset --hard`, `clean -f`, `branch -D`, discarding changes, dropping stashes or rewriting history asks you first, and says what would be lost.
 
 ## <a href="#docs-first-on-the-latest-release"><img src=".github/assets/icons/docs.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Docs first, on the latest release
 
@@ -88,6 +103,22 @@ Context gets compacted and sessions end, but files stay. Each project gets a sma
 ## <a href="#a-31-point-performance-audit"><img src=".github/assets/icons/audit.svg" width="30" height="30" align="top" alt=""></a>&nbsp;A 31-point performance audit
 
 Ask it why an app is slow, and it inspects the code first, then measures on a fast machine and on a slow device over a weak network. It reports the status, priority and expected impact of 31 techniques, from WebP images and code splitting to N+1 queries, indexes, connection pooling and caching. It applies only the ones that fit, one at a time, with numbers before and after. Anything that adds cost, like Redis or a CDN, waits for your approval.
+
+## <a href="#questions-before-code"><img src=".github/assets/icons/question.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Questions before code
+
+Most failed features were built exactly as asked and still missed what was meant. Before building, Wolfin Senior maps the open decisions as a tree and asks them in rounds: every question it can ask right now, numbered, each with its recommended answer, so a "yes" moves things along. Facts it looks up itself; only decisions come to you. Terms you settle go into a `GLOSSARY.md`, so the code, the tests and the conversation use one word for each concept. When talk can't settle a question, it builds a throwaway prototype that can.
+
+## <a href="#reviews-that-prove-every-finding"><img src=".github/assets/icons/review.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Reviews that prove every finding
+
+A review is judged by its findings, not its length. Wolfin Senior reviews on two separate axes, whether the change does what was asked and whether it meets the standards, so one can't hide the other. It reads beyond the diff to every caller, hunts for real bugs and code smells, and keeps a finding only after writing the concrete scenario that breaks the code and checking that no guard already prevents it. You get a verdict first, then findings ranked from critical to low, each with `file:line` and a fix. Your checkout is never touched.
+
+## <a href="#interfaces-checked-in-a-real-browser"><img src=".github/assets/icons/browser.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Interfaces checked in a real browser
+
+For any UI work, it reuses your components and design tokens, designs every state (loading, empty, error, very long content), builds on semantic HTML so it works with a keyboard and a screen reader, handles right-to-left languages, and avoids the look every generated page shares. Then it opens the page: a bundled checker loads it at phone and desktop width, saves screenshots, and reports console errors, sideways overflow, unnamed buttons and the Tab order.
+
+## <a href="#architecture-that-stays-easy-to-change"><img src=".github/assets/icons/layers.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Architecture that stays easy to change
+
+Agents make code cheap to write, and that makes codebases decay faster. The architecture review looks where your git history says change actually happens, finds shallow modules and leaky seams, applies the deletion test, and hands you ranked candidates with before and after sketches. You pick one; only that one gets designed, with several interfaces drafted in parallel and compared before any code moves.
 
 ## <a href="#install"><img src=".github/assets/icons/install.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Install
 
@@ -113,19 +144,27 @@ claude --plugin-url https://wolfin.app/downloads/wolfin-senior.zip
 
 In a real Claude Code session asked to "add a slugify function with tests", the agent loaded the `test-driven-development` skill on its own. Its first attempt to write a file was refused until it loaded `docs-first` and checked the Node version. It then wrote the test first, watched it fail, wrote the function, ran the tests (8 of 8 passing), and logged the work before finishing.
 
+Version 3.0 was tested the same way:
+
+- **Git guard:** told to run `git reset --hard` in a repo with uncommitted work, the command was stopped with the reason, and the work survived.
+- **Review:** `/wolfin-senior:review` on a branch with a planted SQL injection and a missing requirement found both, proved each with a scenario, and also caught a `NaN` total on unknown discount codes that nobody had planted.
+- **Grill:** `/wolfin-senior:grill` opened with the one question that shapes the rest: why the user wants it.
+- **Every push:** 35 automated tests (more than 90 git commands among them) run every hook against real inputs and check every skill's structure, on Linux and macOS.
+
 ## <a href="#turn-a-check-off"><img src=".github/assets/icons/toggle.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Turn a check off
 
-Each guarantee can be switched off on its own with an environment variable set to `off`: `WOLFIN_CODE_GATE`, `WOLFIN_VERIFY_GATE`, `WOLFIN_MEMORY_GATE` and `WOLFIN_REMINDER`.
+Each guarantee can be switched off on its own with an environment variable set to `off`: `WOLFIN_CODE_GATE`, `WOLFIN_VERIFY_GATE`, `WOLFIN_MEMORY_GATE`, `WOLFIN_GIT_GUARD` and `WOLFIN_REMINDER`.
 
 ## <a href="#how-it-works"><img src=".github/assets/icons/gear.svg" width="30" height="30" align="top" alt=""></a>&nbsp;How it works
 
-Installing Wolfin Senior adds four kinds of parts to Claude Code: skills that hold the know-how, hooks that enforce it, two scripts that gather facts, and a memory folder that outlives every session. This guide walks through what runs, when it runs, and how each rule gets enforced, so you know exactly what the agent is doing on your behalf.
+Installing Wolfin Senior adds five kinds of parts to Claude Code: skills that hold the know-how, commands you type to start them, hooks that enforce them, three scripts that gather facts, and a memory folder that outlives every session. This guide walks through what runs, when it runs, and how each rule gets enforced, so you know exactly what the agent is doing on your behalf.
 
 | Part | How many | What it does |
 |---|---|---|
-| Skills | 13 | Step-by-step instructions Claude loads only when a task needs them: design, docs, planning, tests, debugging, review, performance, shipping, memory |
-| Hooks | 4 | Small programs Claude Code itself runs at fixed moments: session start, every message, before a code edit, end of a turn |
-| Scripts | 2 | `versions.py` compares installed and latest versions. `inventory.py` gathers performance evidence |
+| Skills | 15 | Step-by-step instructions Claude loads only when a task needs them: design, docs, planning, tests, debugging, review, UI, architecture, performance, shipping, memory |
+| Commands | 5 | Entry points you type: `grill`, `review`, `audit`, `handoff`, `retro` |
+| Hooks | 5 | Small programs Claude Code itself runs at fixed moments: session start, every message, before a code edit, before a git command, end of a turn |
+| Scripts | 3 | `versions.py` compares installed and latest versions. `inventory.py` gathers performance evidence. `ui-check.mjs` checks a page in a real browser |
 | Memory | 1 folder | `.wolfin-senior/memory/` in each project: where the work stands, what was done, what was decided |
 
 ### The big picture
@@ -140,16 +179,18 @@ flowchart LR
         H2["Every prompt<br/>a short reminder of the rules"]
         H3["Before a code edit<br/>docs-first and TDD loaded?"]
         H4["End of a turn<br/>tests ran? work logged?"]
+        H5["Before a git command<br/>destroys work? ask you"]
     end
 
     M[("Memory<br/>NOW.md, journal/, facts<br/>per project")]
-    S["13 skills<br/>loaded when needed"]
+    S["15 skills<br/>loaded when needed"]
     REG["Package registries<br/>versions.py → npm, PyPI, Go…"]
 
     CC --> H1
     CC --> H2
     CC --> H3
     CC --> H4
+    CC --> H5
     H1 -.->|"reads"| M
     H4 -.->|"checks"| M
     CC -->|"Skill tool"| S
@@ -192,18 +233,21 @@ The first skill, `using-wolfin-senior`, is loaded into every session. Its only j
 | "It's broken", "this test fails" | `systematic-debugging` | `docs-first`, `test-driven-development` for the fix |
 | "It's slow", "optimize" | `performance-optimization` | `verification-before-completion` with numbers |
 | "Review this", "I got feedback" | `code-review-workflow` | fixes one item at a time |
+| "Build this page", "fix the layout" | `ui-engineering` | `docs-first`, `test-driven-development`, a browser check |
+| "This codebase is a mess", "where to refactor" | `architecture-review` | `requirements-and-design`, `writing-plans` for the one you pick |
 | "Where were we?", "continue" | `project-memory` | picks up from `NOW.md` |
 | "Commit", "open a PR", "deploy" | `finishing-and-shipping` | verification first, then the release checklist |
 
 Process skills come first because they set the direction. A design question is settled before any code, and a bug's root cause is found before any fix.
 
-### The four hooks
+### The five hooks
 
 | Hook | Runs | What it enforces |
 |---|---|---|
 | `session-start` | New session, resume, clear, after compaction | Loads the router as binding instructions, plus `NOW.md`, the memory index and the latest journal entries |
 | `prompt-reminder` | Every message you send | About 100 tokens restating the rules, so they stay in view in long sessions |
 | `code-gate.py` | Before every edit of a code file | Refused until `docs-first` and `test-driven-development` are loaded in the session |
+| `git-guard.py` | Before every `git` command | Force push, `reset --hard`, `clean -f`, `branch -D`, discarding changes, dropping stashes or rewriting history shows you a prompt with what would be lost |
 | `stop-gate.py` | When Claude finishes a turn | Code changed after the last test run: run the tests. Anything changed: log it |
 
 Before a code edit (`code-gate.py`):
@@ -255,16 +299,19 @@ A journal entry is short and factual: what was asked, what was done (files), how
 
 Never saved: passwords, tokens or keys (only where they're kept), anything the code or git history already records, and guesses. In git projects the folder is added to `.git/info/exclude` automatically, so it never ends up in a commit. Preferences that apply to every project live in `~/.claude/wolfin-senior/memory/`.
 
-### The two scripts
+### The three scripts
 
 ```bash
 python3 skills/docs-first/scripts/versions.py .
 python3 skills/performance-optimization/scripts/inventory.py .
+node skills/ui-engineering/scripts/ui-check.mjs http://localhost:5173/page
 ```
 
 **versions.py** reads the project's manifests and lockfiles (npm, PyPI, Go, Cargo, RubyGems, Composer, pub), asks the public registries for the latest stable versions, and prints a table: declared, installed, latest, how far behind, and a documentation link. It also flags runtimes that are past end of life. Package names are sent to the public registries, so use `--only` for private projects.
 
 **inventory.py** lists the frameworks, image and font sizes, build-output sizes, possibly unused dependencies, and code signals for each of the 31 performance techniques. Its output is a list of leads, not verdicts. The agent still reads the files before deciding anything.
+
+**ui-check.mjs** loads a page at 375 and 1280 px with Playwright (from your project; `playwright-core` drives your installed Chrome), saves full-page screenshots, and reports console and network errors, sideways overflow with the widest culprits, controls without an accessible name, clickable `div`s, images without alt text or size, a missing `lang`, and the keyboard focus order.
 
 ### Example: "the app is slow"
 
@@ -285,6 +332,7 @@ Strict mode is the default. Each check can be turned off on its own by setting t
 | `WOLFIN_CODE_GATE` | Refusing code edits before `docs-first` and TDD |
 | `WOLFIN_VERIFY_GATE` | Asking for a test run after code changes |
 | `WOLFIN_MEMORY_GATE` | Asking for a journal entry |
+| `WOLFIN_GIT_GUARD` | Asking before destructive git commands |
 | `WOLFIN_REMINDER` | The reminder on every message |
 
 ### When something looks off
@@ -294,27 +342,42 @@ Strict mode is the default. Each check can be turned off on its own by setting t
 | No mention of memory at the start | Installed as plain skills, not as a plugin, or an old session | Install it as a plugin and open a new session |
 | A code edit gets refused | `docs-first` or `test-driven-development` isn't loaded yet | Expected. Claude loads them and retries |
 | It keeps working briefly after answering | The end-of-turn check asked for tests or a log entry | Expected, at most once per turn |
+| A git command asks for your approval | The git guard spotted a command that destroys work | Approve if you meant it. In `claude -p` runs nobody can approve, so it's refused |
+| ui-check says Playwright is missing | Playwright isn't installed in the project | `npm i -D playwright-core` (uses your installed Chrome) |
 | "lookup failed" in versions.py | No internet, or a private package | Use `--offline`, or `--only` for public packages |
 
 ## <a href="#files-in-this-repository"><img src=".github/assets/icons/files.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Files in this repository
 
 ```
-.claude-plugin/            plugin.json + marketplace.json
+.claude-plugin/            plugin.json, marketplace.json, icon.png
 hooks/hooks.json           when each hook runs
 hooks/session-start        injects the binding router and memory
 hooks/prompt-reminder      short reminder on every message
 hooks/code-gate.py         code edits need docs-first and TDD loaded
+hooks/git-guard.py         destructive git commands ask you first
 hooks/stop-gate.py         end of turn: tested after the last edit, work logged
 skills/<name>/SKILL.md     the skill itself
 skills/<name>/references/  references read only when needed
 skills/docs-first/scripts/versions.py
 skills/performance-optimization/scripts/inventory.py
+skills/ui-engineering/scripts/ui-check.mjs
+skills/{grill,review,audit,handoff,retro}/   the five commands
+tests/                     hook behavior and skill structure tests
+.github/workflows/ci.yml   runs the tests and validation on every push
 .github/assets/            README banner, logo and icons
+CHANGELOG.md               what changed in each version
 ```
 
 ## <a href="#credits-and-license"><img src=".github/assets/icons/heart.svg" width="30" height="30" align="top" alt=""></a>&nbsp;Credits and license
 
-MIT. Parts of the workflow skills (planning, test-driven development, debugging, review) are adapted from the open-source [superpowers](https://github.com/obra/superpowers) project by Jesse Vincent, under the MIT License. See [LICENSE](LICENSE).
+MIT. Wolfin Senior builds on open-source work, each used under the MIT License with its notice in [LICENSE](LICENSE):
+
+- [superpowers](https://github.com/obra/superpowers) by Jesse Vincent: the workflow skills (planning, test-driven development, debugging, review).
+- [skills](https://github.com/mattpocock/skills) by Matt Pocock: question rounds, domain language, deep modules, the red feedback loop, two-axis review, handoff and retro.
+- [Claude Code Templates](https://github.com/davila7/claude-code-templates) by Daniel Ávila: the proven-findings code review and the senior frontend checklist.
+- [show-me](https://github.com/humanlayer/skills) by HumanLayer: the pull request format.
+
+The "point of view" guidance for new designs was also informed by Anthropic's `frontend-design` skill. See [CHANGELOG.md](CHANGELOG.md) for what changed in each version.
 
 Articles: [Wolfin Senior plugin](https://wolfin.app/blog?post=wolfin-senior-plugin) and [How Wolfin Senior works](https://wolfin.app/blog?post=how-wolfin-senior-works) on wolfin.app.
 

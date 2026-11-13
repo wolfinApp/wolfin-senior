@@ -84,22 +84,49 @@ and you list exactly what will be lost and get confirmation first.
 
 ### PR description template
 
+Use the repo's own template if it has one. Otherwise:
+
 ```markdown
-## What
-<one paragraph: the change, in user-facing terms>
+## Summary
+<The smallest visual that makes the change clear, then two or three
+sentences in user-facing terms. Link the issue or spec.>
 
-## Why
-<the problem or requirement; link the issue/spec>
+## Evidence
+- **Before:** <screenshot, output, or the failing test run>
+- **After:** <screenshot, output, or the passing test run>
 
-## How
-<key decisions and trade-offs; anything a reviewer should look at closely>
-
-## Testing
-<commands run and results; manual checks; screenshots or recordings for UI>
-
-## Risk & rollback
-<what could go wrong, how we'd notice, how to revert (flag off / revert commit / down-migration)>
+## Merge danger
+**Door:** one-way | two-way
+**Blast radius:** <one or two words: "checkout", "every API client", "none">
+<What could go wrong, how we'd notice, how to roll back.>
 ```
+
+**Summary: pick the smallest view that makes the point.** A call tree for
+control flow, a shallow file tree for a refactor, pseudocode for an
+algorithm, a Mermaid sequence diagram for components talking, or a `diff`
+block of the tree when the point is what changed:
+
+```diff
+ submitForm
+   createSession
+     persistPrompt
++    expandSkillMention
+     launchAgent
+```
+
+One visual is usually enough. Keep only the calls, files and states the
+reviewer needs.
+
+**Evidence: show it works, before and after.** A screenshot is the best
+evidence for a visual change. Test or console output is next: show the
+exact test that failed before and passes now. "Tests pass" with no output
+is not evidence.
+
+**Merge danger: can we walk it back?** A two-way door is cheap to undo
+(revert the commit, turn the flag off). A one-way door isn't: dropped
+columns, published API changes, sent emails, deleted data, rewritten
+history. Call one-way doors out loudly, and say what the rollback is for
+everything else.
 
 ## Step 4: Deployment readiness (SDLC 05)
 
@@ -121,6 +148,12 @@ End with an honest wrap-up for the user:
 - **Known limitations and follow-ups:** short and concrete, nothing hidden
 - What to watch after the release (the metric or log that tells you it's healthy)
 - Docs and changelog updated, or a note that they need to be
+- **When the work went sideways** (a wrong turn, a bug found late, a long
+  search for a file), suggest one improvement to the *environment* that
+  would have prevented it: a lint rule or test for a mechanical mistake, a
+  line in the coding standards for a judgement call, a pointer in
+  `CLAUDE.md` for something hard to find. The user can ask for a full
+  retrospective with `/wolfin-senior:retro`.
 
 Record the same in the project memory (`project-memory`): a journal entry
 for the release (commits, PR URL, verification), NOW.md cleared of the

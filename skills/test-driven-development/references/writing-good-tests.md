@@ -57,8 +57,17 @@ expect(screen.getByRole('navigation')).toBeInTheDocument();
 ```
 
 **Mock at the right level.** Learn every side effect of the real method
-before replacing it. Mock the slow or external operation (network, a
-third-party API, the clock) and keep what the test depends on real.
+before replacing it. Mock only at **system boundaries**: third-party APIs,
+payment and email providers, the clock, randomness, and sometimes the
+database or file system (prefer a test database or an in-memory stand-in).
+Never mock your own modules or internal collaborators: that tests the
+wiring, not the behavior, and breaks on every refactor.
+
+**Make boundaries easy to replace.** Pass external clients in rather than
+constructing them inside (`charge(order, paymentClient)`, not `new
+StripeClient()` in the body). Prefer one function per external operation
+(`getUser`, `createOrder`) over one generic `fetch(endpoint, options)`, so
+each double returns one shape with no branching in the test setup.
 
 **Make doubles specific.** When arguments, call counts or ordering are part
 of the contract, assert them. Give each branch (success, error, malformed)
@@ -89,6 +98,9 @@ A mutation nothing catches marks a behavior as unprotected.
 ## Warning signs
 
 - Setup and assertion share the same object, so equality is guaranteed
+- **Tautological:** the expected value is computed the way the code computes
+  it (`expect(total(items)).toBe(items.reduce(...))`), so the test passes by
+  construction. Use a literal from an independent source: `toBe(15)`
 - The test can only fail through a crash or a missing selector
 - It fails on every intentional change and never on accidental breakage
 - Expected values are hidden behind loops or helpers

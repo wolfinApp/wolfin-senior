@@ -5,8 +5,9 @@ Every Edit/Write of a source-code file is refused until both skills have
 been loaded in the session (running docs-first's versions.py also counts
 for docs-first). The refusal names what's missing. After 3 refusals in one
 session the gate lets edits through, so a session can never be trapped by
-it (for example, a subagent that can't load skills). Turn it off with
-WOLFIN_CODE_GATE=off.
+it (for example, a subagent that can't load skills). Throwaway files in a
+temp folder outside the project (a repro script) are not gated.
+Turn it off with WOLFIN_CODE_GATE=off.
 """
 
 import json
@@ -28,6 +29,33 @@ REQUIRED = {
     "test-driven-development": ("skills/test-driven-development",),
 }
 MAX_DENIALS = 3
+
+
+def inside(path, root):
+    """True if path is in the project folder (relative paths count as inside).
+
+    Compares both the literal and the symlink-resolved paths, so a file under a
+    linked folder in the project counts, and ignores letter case on macOS and
+    Windows, whose file systems usually do.
+    """
+    if not root or not os.path.isabs(path):
+        return True
+    fold = str.lower if sys.platform in ("darwin", "win32") else str
+
+    def under(p, r):
+        p, r = fold(p), fold(r).rstrip(os.sep)
+        return p == r or p.startswith(r + os.sep) or not r
+
+    return (under(os.path.abspath(path), os.path.abspath(root))
+            or under(os.path.realpath(path), os.path.realpath(root)))
+
+
+def scratch(path, root):
+    """A throwaway file: outside the project and inside a temp folder."""
+    if inside(path, root):
+        return False
+    temps = {tempfile.gettempdir(), os.environ.get("TMPDIR", ""), "/tmp", "/var/tmp"}
+    return any(t and inside(path, t) and os.path.isabs(path) for t in temps)
 
 
 def skill_call(line, name):
@@ -70,6 +98,8 @@ def main():
     path = str(tool_input.get("file_path") or tool_input.get("notebook_path") or "")
     if os.path.splitext(path)[1].lower() not in CODE_EXT or "/.wolfin-senior/" in path:
         return
+    if scratch(path, os.environ.get("CLAUDE_PROJECT_DIR") or data.get("cwd")):
+        return  # a throwaway script in a temp folder isn't project code
 
     transcripts = [p for p in (data.get("transcript_path"), data.get("agent_transcript_path")) if p]
     missing = [name for name in REQUIRED if name not in loaded_skills(transcripts)]
